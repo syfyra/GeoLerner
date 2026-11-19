@@ -2,7 +2,7 @@
 
 Geographie-Trainer für Klasse 10 mit Lernpfad, Herzen, Streak und XP – begleitet von Magmus, dem frechen kleinen Vulkan.
 
-Aktueller Inhalt: der Stoff der Klassenarbeit am 20.11.2026 in 8 Einheiten, 24 Lektionen und 207 Fragen, dazu 66 weitere Fragen in der Arena.
+Aktueller Inhalt: der Stoff der Klassenarbeit am 20.11.2026 in 8 Einheiten, 24 Lektionen und 208 Fragen, dazu 72 weitere Fragen in der Arena.
 
 | Einheit | Thema |
 | --- | --- |
@@ -30,17 +30,26 @@ Aktueller Inhalt: der Stoff der Klassenarbeit am 20.11.2026 in 8 Einheiten, 24 L
 
 Der Fortschritt liegt nur im Browser (`localStorage`). Es gibt keinen Server, keine Anmeldung, keine externen Schriften, Skripte oder Tracker.
 
-## Wichtig: die Zahlen zum Schalenaufbau
+## Die Zahlen zum Schalenaufbau
 
-Tiefe, Temperatur und Druck der Erdschalen unterscheiden sich je nach Schulbuch. Die Werte stehen deshalb an genau einer Stelle: **`js/werte.js`**. Alle Zahlen-Fragen, der Zahlen-Drill, die Tabelle im Spickzettel und das Diagramm in Einheit 2 werden daraus erzeugt.
+Tiefe, Temperatur und Druck der Erdschalen unterscheiden sich je nach Schulbuch. Die Werte stehen deshalb an genau einer Stelle: **`js/werte.js`**. Alle Zahlen-Fragen, der Zahlen-Drill, die Tabellen im Spickzettel und das Diagramm in Einheit 2 werden daraus erzeugt.
 
-Voreingestellt ist ein **Vorschlag** aus gängigen, gerundeten Schulbuch-Angaben. Die App zeigt dazu einen Warnhinweis. So passt du die Werte an dein Heft an:
+Eingetragen sind die Werte aus dem Schulbuch, S. 131, M3 „Der Schalenbau der Erde“. Die Datei ist aufgebaut wie die Spalte im Buch – welcher Wert steht in welcher Tiefe:
+
+```js
+schalen:      [{ … tiefe: [2900, 5000] … }]        // Ober- und Untergrenze jeder Schale in km
+temperatur:   [[40, 1000], [700, 2000], …]         // [Tiefe in km, Temperatur in °C]
+druck:        [[1000, 400], [2900, 1500], …]       // [Tiefe in km, Druck in kbar]
+gleichwertig: [[5000, 5150]]                       // Tiefen, die für dieselbe Grenze stehen: beide zählen als richtig
+```
+
+So änderst du etwas:
 
 1. `js/werte.js` öffnen (auf GitHub: Datei anklicken, dann auf den Stift).
-2. Die Zahlen bei `tiefe`, `temp` und `druck` ändern. Steht ein Wert nicht im Heft, `null` eintragen – dann wird nicht danach gefragt.
-3. Wenn die Einheit für den Druck im Heft anders heißt, `druckEinheit` ändern.
-4. `geprueft: true` setzen. Dann verschwindet der Warnhinweis.
-5. Speichern (Commit). Nach etwa einer Minute ist die Seite aktualisiert.
+2. Zahlen ändern, Einträge ergänzen oder löschen. Wonach nicht gefragt werden soll, einfach weglassen.
+3. Speichern (Commit). Nach etwa einer Minute ist die Seite aktualisiert.
+
+Mit `geprueft: false` blendet die App wieder den Hinweis „Vorschlagswerte“ ein.
 
 ## Auf GitHub Pages veröffentlichen
 

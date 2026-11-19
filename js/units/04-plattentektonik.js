@@ -5,8 +5,8 @@ GEO.unit({
   sheet: {
     intro: 'Die feste Gesteinshülle der Erde ist in Platten zerbrochen. Sie bewegen sich wenige Zentimeter pro Jahr – und an ihren Grenzen passiert fast alles Spannende: Gebirge, Vulkane, Erdbeben.',
     facts: [
-      ['Lithosphäre', 'Die feste Gesteinshülle der Erde: Erdkruste plus oberster, fester Teil des Erdmantels. Sie ist in Platten zerbrochen.'],
-      ['Asthenosphäre', 'Die zähplastische Fließzone darunter. Auf ihr bewegen sich die Platten.'],
+      ['Lithosphäre', 'Die starre Gesteinshülle der Erde: Erdkruste plus oberster, fester Teil des Erdmantels. Sie ist in Platten zerbrochen.'],
+      ['Asthenosphäre', 'Die verformbare (zähplastische) Zone darunter. Auf ihr bewegen sich die Platten.'],
       ['Lithosphärenplatten', 'Sieben große Platten (Eurasische, Afrikanische, Nordamerikanische, Südamerikanische, Pazifische, Indisch-Australische, Antarktische) und mehrere kleine, zum Beispiel die Nazca-Platte.'],
       ['Antrieb', 'Konvektionsströme im Erdmantel: Heißes Material steigt auf, kühlt ab und sinkt wieder. Diese Strömungen nehmen die Platten mit – wenige Zentimeter pro Jahr.'],
       ['Divergierende Plattengrenze', 'Platten bewegen sich auseinander. Magma steigt auf und bildet neue ozeanische Kruste. Es entstehen mittelozeanische Rücken (Mittelatlantischer Rücken, Island) oder Grabenbrüche (Ostafrika).'],
@@ -35,8 +35,8 @@ GEO.unit({
       qs: [
         { t: 'mc', q: 'Was ist die Lithosphäre?',
           o: ['Die feste Gesteinshülle aus Erdkruste und oberstem Erdmantel', 'Die Lufthülle der Erde', 'Der flüssige äußere Erdkern', 'Die Fließzone im Erdmantel'], a: 0,
-          w: 'Die Lithosphäre ist rund 100 km dick und in Platten zerbrochen.' },
-        { t: 'type', q: 'Wie heißt die zähplastische Fließzone, auf der sich die Platten bewegen?', accept: ['Asthenosphäre', 'Asthenosphaere', 'Astenosphäre'],
+          w: 'Die Lithosphäre ist starr und in Platten zerbrochen.' },
+        { t: 'type', q: 'Wie heißt die verformbare Zone im oberen Erdmantel, auf der sich die Platten bewegen?', accept: ['Asthenosphäre', 'Asthenosphaere', 'Astenosphäre'],
           w: 'Die Asthenosphäre liegt direkt unter der Lithosphäre im oberen Erdmantel.' },
         { t: 'mc', q: 'Was treibt die Bewegung der Platten an?',
           o: ['Konvektionsströme im Erdmantel', 'Die Anziehungskraft des Mondes', 'Der Wind über den Ozeanen', 'Der Umlauf der Erde um die Sonne'], a: 0,

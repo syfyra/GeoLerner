@@ -253,10 +253,12 @@
           { auto: 'Auto', light: 'Hell', dark: 'Dunkel' }[t] + '</button>';
       }).join('') + '</div></div>' +
       '<div class="row"><span>Zahlen zum Schalenaufbau</span><span class="pill ' + (GEO.WERTE.geprueft ? 'done' : 'hot') + '">' +
-      (GEO.WERTE.geprueft ? 'mit Heft abgeglichen' : 'Vorschlag – ungeprüft') + '</span></div>' +
+      (GEO.WERTE.geprueft ? 'aus dem Schulbuch' : 'Vorschlag – ungeprüft') + '</span></div>' +
       '<div class="row"><span>Fortschritt</span><button class="btn sm ghost danger" data-act="reset">Zurücksetzen</button></div>' +
-      (GEO.WERTE.geprueft ? '' : '<p class="muted small">Die Zahlen für Tiefe, Temperatur und Druck stehen zentral in <code>js/werte.js</code>. ' +
-        'Gleiche sie mit deinem Heft ab und setze dort <code>geprueft: true</code>.</p>') +
+      (GEO.WERTE.geprueft
+        ? '<p class="muted small">Tiefe, Temperatur und Druck stehen zentral in <code>js/werte.js</code>' + (GEO.WERTE.quelle ? ' (Quelle: ' + GEO.WERTE.quelle + ')' : '') + '.</p>'
+        : '<p class="muted small">Die Zahlen für Tiefe, Temperatur und Druck stehen zentral in <code>js/werte.js</code>. ' +
+          'Gleiche sie mit deinem Heft ab und setze dort <code>geprueft: true</code>.</p>') +
       '<p class="muted small">Dein Fortschritt wird nur in diesem Browser gespeichert. Es werden keine Daten verschickt.</p></section>';
     return h;
   }

@@ -135,6 +135,7 @@ function checkQ(w, q, inPart) {
       if (!isNum(q.a)) err(w, 'Zahl (a) fehlt');
       else if (U.num(U.de(q.a)) !== q.a) err(w, 'Zahl lässt sich nicht eindeutig eintippen: ' + q.a);
       if (q.tol != null && !(isNum(q.tol) && q.tol >= 0)) err(w, 'Toleranz ungültig');
+      if (q.alt != null && !(Array.isArray(q.alt) && q.alt.every(isNum))) err(w, 'alt muss eine Liste von Zahlen sein');
       break;
     case 'label': {
       const parts = partsOf(q.d);
@@ -171,18 +172,39 @@ function checkQ(w, q, inPart) {
   const W = GEO.WERTE, w = 'js/werte.js';
   if (!W || !Array.isArray(W.schalen) || W.schalen.length < 3) return err(w, 'mindestens drei Schalen nötig');
   if (!isStr(W.druckEinheit)) err(w, 'druckEinheit fehlt');
-  let prev = null;
+  let prev = null, max = 0;
   W.schalen.forEach(s => {
     ['id', 'name', 'nom', 'gen', 'dat', 'zustand', 'stoff'].forEach(k => { if (!isStr(s[k])) err(w, 'Schale ' + (s.id || '?') + ': Feld ' + k + ' fehlt'); });
     if (s.tiefe != null) {
       if (!Array.isArray(s.tiefe) || s.tiefe.length !== 2 || !isNum(s.tiefe[0]) || !isNum(s.tiefe[1]) || s.tiefe[1] <= s.tiefe[0]) err(w, 'Schale ' + s.id + ': tiefe muss [von, bis] sein');
-      else if (prev && prev.tiefe && prev.tiefe[1] !== s.tiefe[0]) err(w, 'Schale ' + s.id + ' beginnt nicht dort, wo ' + prev.id + ' endet');
+      else {
+        if (prev && prev.tiefe && prev.tiefe[1] !== s.tiefe[0]) err(w, 'Schale ' + s.id + ' beginnt nicht dort, wo ' + prev.id + ' endet');
+        max = Math.max(max, s.tiefe[1]);
+      }
     }
-    ['temp', 'druck'].forEach(k => {
-      if (s[k] != null && !isNum(s[k])) err(w, 'Schale ' + s.id + ': ' + k + ' muss eine Zahl oder null sein');
-      if (prev && isNum(s[k]) && isNum(prev[k]) && s[k] <= prev[k]) warn(w, 'Schale ' + s.id + ': ' + k + ' ist nicht höher als in der Schale darüber');
-    });
     prev = s;
+  });
+  const gleich = [];
+  (W.gleichwertig || []).forEach(g => {
+    if (!Array.isArray(g) || g.length < 2 || g.some(x => !isNum(x))) err(w, 'gleichwertig: erwartet werden Listen aus Tiefen, z. B. [5000, 5150]');
+    else g.forEach(x => gleich.push(x));
+  });
+  [['temperatur', '°C'], ['druck', W.druckEinheit]].forEach(([key, unit]) => {
+    const list = W[key];
+    if (list == null) return warn(w, key + ' fehlt – danach wird nicht gefragt');
+    if (!Array.isArray(list)) return err(w, key + ' muss eine Liste aus [Tiefe, Wert] sein');
+    let last = null;
+    list.forEach((p, i) => {
+      if (!Array.isArray(p) || p.length !== 2 || !isNum(p[0]) || !isNum(p[1])) return err(w, key + ' Eintrag ' + (i + 1) + ': erwartet wird [Tiefe in km, Wert]');
+      if (p[0] < 0 || (max && p[0] > max && gleich.indexOf(p[0]) < 0)) err(w, key + ': Tiefe ' + p[0] + ' km liegt außerhalb der Erde');
+      if (last && p[0] <= last[0]) err(w, key + ': Tiefen müssen von oben nach unten sortiert sein (' + p[0] + ' km)');
+      if (last && p[1] <= last[1]) warn(w, key + ': Wert in ' + p[0] + ' km Tiefe ist nicht höher als darüber (' + p[1] + ' ' + unit + ')');
+      last = p;
+    });
+    if (new Set(list.map(p => p[1])).size !== list.length) warn(w, key + ': derselbe Wert steht mehrfach – Zuordnungsaufgaben entfallen dann');
+  });
+  ['ozeanischeKruste', 'kontinentaleKruste'].forEach(k => {
+    if (W[k] != null && !(Array.isArray(W[k]) && W[k].length === 2 && isNum(W[k][0]) && isNum(W[k][1]) && W[k][1] > W[k][0])) err(w, k + ' muss [von, bis] oder null sein');
   });
   if (!W.geprueft) warn(w, 'Die Zahlen zum Schalenaufbau sind noch als „ungeprüft“ markiert (geprueft: false)');
 })();

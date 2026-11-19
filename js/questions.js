@@ -498,7 +498,8 @@
         inp.disabled = true;
         var v = U.num(inp.value), ok = !isNaN(v) && (fits(v, q.a) || (q.alt || []).some(function (a) { return fits(v, a); }));
         inp.classList.add(ok ? 'good' : 'bad');
-        return { ok: ok, right: U.de(q.a) + (q.unit ? ' ' + q.unit : '') };
+        var unit = q.unit ? ' ' + q.unit : '';
+        return { ok: ok, right: U.de(q.a) + unit + ((q.alt || []).length ? ' (auch ' + q.alt.map(function (a) { return U.de(a) + unit; }).join(', ') + ')' : '') };
       }
     };
   };
